@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:gravity="center"
-        android:textSize="60sp" />
+        android:textSize="40sp" />
 
     <ListView
         android:layout_width="wrap_content"

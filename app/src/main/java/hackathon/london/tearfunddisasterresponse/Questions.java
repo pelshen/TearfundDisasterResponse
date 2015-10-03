@@ -17,14 +17,16 @@ public class Questions {
 
     public Question getNextQuestion(String category) {
         Question[] newQuestions = categoryToQuestions.get(category);
-        for(int i = 0; i < newQuestions.length; i++) {
-            queuedQuestions.add(newQuestions[i]);
-        }
-        Question returnedQuestion = null;
-        if(queuedQuestions.size() > 0) {
-            returnedQuestion = queuedQuestions.get(0);
-            queuedQuestions.remove(0);
-            return returnedQuestion;
+        if(newQuestions != null) {
+            for (int i = 0; i < newQuestions.length; i++) {
+                queuedQuestions.add(newQuestions[i]);
+            }
+            Question returnedQuestion = null;
+            if (queuedQuestions.size() > 0) {
+                returnedQuestion = queuedQuestions.get(0);
+                queuedQuestions.remove(0);
+                return returnedQuestion;
+            }
         }
         return null;
     }
@@ -76,7 +78,7 @@ public class Questions {
 
         for(int i = 0; i < categories.length; i++) {
             String category = categories[i];
-            Question[] questionsForCategory = {};
+            ArrayList<Question> questionsForCategory = new ArrayList<Question>();
             String[] stringQuestionsForCategory = questions.get(i);
             for(int j = 0; j < stringQuestionsForCategory.length; j++) {
                 String question = stringQuestionsForCategory[j];
@@ -92,9 +94,13 @@ public class Questions {
                 } else if(question.contains("Width")) {
                     temp = new Question(question, answersCracksWidth);
                 }
-                questionsForCategory[j] = temp;
+                questionsForCategory.add(temp);
             }
-            categoryToQuestions.put(category, questionsForCategory);
+            Question[] questionArray = new Question[questionsForCategory.size()];
+            for(int n = 0; n < questionsForCategory.size(); n++) {
+                questionArray[n] = questionsForCategory.get(n);
+            }
+            categoryToQuestions.put(category, questionArray);
         }
     }
 }

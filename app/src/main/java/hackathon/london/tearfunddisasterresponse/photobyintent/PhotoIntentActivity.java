@@ -24,7 +24,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
+import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -296,7 +298,10 @@ public class PhotoIntentActivity extends Activity {
 
 		case ACTION_TAKE_PHOTO_S: {
 			if (resultCode == RESULT_OK) {
-				handleSmallCameraPhoto(data);
+//				handleSmallCameraPhoto(data);
+				Intent nextScreen = new Intent(getApplicationContext(), QuestionsActivity.class);
+				nextScreen.putExtra("Category", "building");
+				startActivity(nextScreen);
 			}
 			break;
 		} // ACTION_TAKE_PHOTO_S

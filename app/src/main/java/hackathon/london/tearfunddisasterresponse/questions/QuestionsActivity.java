@@ -2,6 +2,7 @@ package hackathon.london.tearfunddisasterresponse.questions;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import hackathon.london.tearfunddisasterresponse.Question;
+import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
 
 public class QuestionsActivity extends ListActivity implements AdapterView.OnItemClickListener {
@@ -25,15 +30,38 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-        answersView = getListView();
+        Questions questionsClass = new Questions();
+        Question question = questionsClass.getNextQuestion(getIntent().getStringExtra("Category"));
+        if(question != null) {
+            ArrayList<String> answers = question.getAnswers();
+            String theQuestion = question.getQuestion();
 
-        answersView.setAdapter(new ArrayAdapter<String>(this, R.layout.answer_list_item, questions));
-        answersView.setOnItemClickListener(this);
+            final TextView textViewToChange = (TextView) findViewById(R.id.questionTitle);
+            textViewToChange.setText(
+                    theQuestion);
+
+            String[] answersArray = new String[answers.size()];
+            for (int i = 0; i < answers.size(); i++) {
+                answersArray[i] = answers.get(i);
+            }
+
+            answersView = getListView();
+
+            answersView.setAdapter(new ArrayAdapter<String>(this, R.layout.answer_list_item, answersArray));
+            answersView.setOnItemClickListener(this);
+        } else {
+            Toast.makeText(getApplicationContext(), "FINISHED", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
+//                Toast.LENGTH_SHORT).show();
+//        Intent nextQuestionIntent = new Intent()
+
+            Intent nextScreen = new Intent(getApplicationContext(), QuestionsActivity.class);
+            nextScreen.putExtra("Category", ((TextView) view).getText());
+            startActivity(nextScreen);
     }
 }
