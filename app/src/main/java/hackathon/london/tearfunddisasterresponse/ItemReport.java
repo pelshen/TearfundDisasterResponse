@@ -2,6 +2,9 @@ package hackathon.london.tearfunddisasterresponse;
 
 import android.graphics.Bitmap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +27,9 @@ public class ItemReport {
     private final static String LOCATION_NAME = "location";
     private final static String PICTURE_URL_NAME = "pictureUrl";
     private final static String NOTES_NAME = "notes";
+    private final static String ANSWERS_NAME = "answers";
 
     private static final String PICTURE_URL_PREFIX = "http://www.example.com/path/";
-
 
     public ItemReport() {
 
@@ -80,6 +83,10 @@ public class ItemReport {
         return this.answers.get(question);
     }
 
+    private Map<String, String> getAnswers() {
+        return answers;
+    }
+
     public void answerQuestion(String question, String answer) {
         this.answers.put(question, answer);
     }
@@ -92,19 +99,23 @@ public class ItemReport {
         this.notes = notes;
     }
 
-    public Map<String, String> generateMap() {
-        Map<String, String> reportMap = new HashMap<>(5);
-        reportMap.put(CATEGORY_NAME, getCategory());
-        reportMap.put(LOCATION_NAME, getLocation());
-        reportMap.put(PHONE_NUMBER_NAME, getPhoneNumber());
-        reportMap.put(PICTURE_URL_NAME, getPictureUrl());
-        reportMap.put(NOTES_NAME, getNotes());
-
-        return reportMap;
+    public JSONObject generateJSON() {
+        JSONObject reportJSON = new JSONObject();
+        try {
+            reportJSON.put(CATEGORY_NAME, getCategory());
+            reportJSON.put(LOCATION_NAME, getLocation());
+            reportJSON.put(PHONE_NUMBER_NAME, getPhoneNumber());
+            reportJSON.put(PICTURE_URL_NAME, getPictureUrl());
+            reportJSON.put(NOTES_NAME, getNotes());
+            reportJSON.put(ANSWERS_NAME, new JSONObject(getAnswers()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return reportJSON;
     }
 
     private String getPictureUrl() {
-        return PICTURE_URL_PREFIX + getTimestamp().getTime();
+        return PICTURE_URL_PREFIX + getTimestamp().getTime() + ".png";
     }
 
 
