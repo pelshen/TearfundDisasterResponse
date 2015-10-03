@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.parse.Parse;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -11,6 +12,9 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "xC0N1kQNCRAUFfKOlxQyegPXe3fZoJFllD36FWey", "PaMc1ad9VVmOWWQ2lDaLpfD3x8YO4q82jNqS1K6F");
     }
 
     @Override
