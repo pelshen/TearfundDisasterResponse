@@ -1,10 +1,12 @@
 package hackathon.london.tearfunddisasterresponse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,9 +47,20 @@ public class LocationActivity extends AppCompatActivity {
         Log.d(TAG, "making use of new location...");
         // change screen state "got location!"
         TextView locationStateTextView = (TextView) findViewById(R.id.locationState);
-        locationStateTextView.setText("Y");
+
+        locationStateTextView.setText("Found.");
 
         // move to next app
+        // wait a bit before changing so flow is not incomprehensible
+        Handler handler = new Handler();
+        int millisToWait = 700;
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionActivity.class);
+                startActivity(moveToQuestionsIntent);
+            }
+        }, millisToWait);
+
     }
 
     @Override
