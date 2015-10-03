@@ -15,4 +15,7 @@
     <string name="btnIntendV">Take Video</string>
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
+    <string name="title_activity_location">Getting Your Location</string>
+    <string name="locationString">Currently no location</string>
+    <string name="title_activity_question">QuestionActivity</string>
 </resources>
