@@ -1,11 +1,5 @@
 package hackathon.london.tearfunddisasterresponse.photobyintent;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,10 +18,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import hackathon.london.tearfunddisasterresponse.LocationActivity;
-import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
-import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
+import hackathon.london.tearfunddisasterresponse.amazons3.AmazonUploader;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -150,7 +149,7 @@ public class PhotoIntentActivity extends Activity {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 		switch(actionCode) {
-		case ACTION_TAKE_PHOTO_B:
+		case ACTION_TAKE_PHOTO_S:
 			File f = null;
 			
 			try {
@@ -231,6 +230,7 @@ public class PhotoIntentActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.main);
 
 		mImageView = (ImageView) findViewById(R.id.imageView1);
@@ -285,6 +285,7 @@ public class PhotoIntentActivity extends Activity {
 		} else {
 			mAlbumStorageDirFactory = new BaseAlbumDirFactory();
 		}
+
 	}
 
 	@Override
@@ -300,6 +301,11 @@ public class PhotoIntentActivity extends Activity {
 		case ACTION_TAKE_PHOTO_S: {
 			if (resultCode == RESULT_OK) {
 //				handleSmallCameraPhoto(data);
+				AmazonUploader uploader = new AmazonUploader(getApplicationContext());
+				Uri uri = (Uri) data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+				File file = new File(uri.getPath());
+				Log.d("mydebugmsg", file.getPath());
+				uploader.uploadPhoto("testKey", file);
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
 				nextScreen.putExtra("Category", "building");
 				startActivity(nextScreen);
