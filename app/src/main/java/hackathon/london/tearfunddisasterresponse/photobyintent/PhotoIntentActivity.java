@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
@@ -252,21 +253,21 @@ public class PhotoIntentActivity extends Activity {
 //				MediaStore.ACTION_IMAGE_CAPTURE
 //		);
 
-		Button picHealthBtn = (Button) findViewById(R.id.btnIntendHealth);
+		ImageButton picHealthBtn = (ImageButton) findViewById(R.id.btnIntendHealth);
 		setBtnListenerOrDisable(
 				picHealthBtn,
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
-		Button picWaterBtn = (Button) findViewById(R.id.btnIntendWater);
+		ImageButton picWaterBtn = (ImageButton) findViewById(R.id.btnIntendWater);
 		setBtnListenerOrDisable(
 				picWaterBtn,
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
-		Button picBuildingBtn = (Button) findViewById(R.id.btnIntendBuilding);
+		ImageButton picBuildingBtn = (ImageButton) findViewById(R.id.btnIntendBuilding);
 		setBtnListenerOrDisable(
 				picBuildingBtn,
 				mTakePicSOnClickListener,
@@ -366,15 +367,13 @@ public class PhotoIntentActivity extends Activity {
 	}
 
 	private void setBtnListenerOrDisable( 
-			Button btn, 
-			Button.OnClickListener onClickListener,
+			ImageButton btn,
+			ImageButton.OnClickListener onClickListener,
 			String intentName
 	) {
 		if (isIntentAvailable(this, intentName)) {
 			btn.setOnClickListener(onClickListener);        	
 		} else {
-			btn.setText( 
-				getText(R.string.cannot).toString() + " " + btn.getText());
 			btn.setClickable(false);
 		}
 	}

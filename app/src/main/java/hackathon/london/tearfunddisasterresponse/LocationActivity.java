@@ -1,5 +1,6 @@
 package hackathon.london.tearfunddisasterresponse;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -20,6 +21,8 @@ import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 public class LocationActivity extends AppCompatActivity {
 
     private static final String TAG = "LocationActivity";
+
+    private ProgressDialog progressDialog = new ProgressDialog(LocationActivity.this);
 
     private String category;
 
@@ -52,11 +55,12 @@ public class LocationActivity extends AppCompatActivity {
         // change screen state "got location!"
         TextView locationStateTextView = (TextView) findViewById(R.id.locationState);
 
-        locationStateTextView.setText("Found.");
-
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
         Handler handler = new Handler();
+        progressDialog.dismiss();
+        /* TODO add tick */
+
         int millisToWait = 1000;
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -76,6 +80,10 @@ public class LocationActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate");
 
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         category = getIntent().getStringExtra("Category");
 
