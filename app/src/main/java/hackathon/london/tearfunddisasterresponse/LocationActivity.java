@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -58,7 +59,6 @@ public class LocationActivity extends AppCompatActivity {
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
         Handler handler = new Handler();
-        progressDialog.dismiss();
         /* TODO add tick */
 
         int millisToWait = 1000;
@@ -67,6 +67,7 @@ public class LocationActivity extends AppCompatActivity {
                 Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionsActivity.class);
                 moveToQuestionsIntent.putExtra("Category", category);
 
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 startActivity(moveToQuestionsIntent);
             }
         }, millisToWait);
@@ -79,11 +80,6 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
 
         Log.d(TAG, "onCreate");
-
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
 
         category = getIntent().getStringExtra("Category");
 

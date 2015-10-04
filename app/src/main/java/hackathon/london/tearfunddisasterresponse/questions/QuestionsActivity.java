@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import hackathon.london.tearfunddisasterresponse.FinalPageActivity;
 import hackathon.london.tearfunddisasterresponse.Question;
 import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
@@ -50,7 +51,9 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
             answersView.setAdapter(new ArrayAdapter<String>(this, R.layout.answer_list_item, answersArray));
             answersView.setOnItemClickListener(this);
         } else {
-            Toast.makeText(getApplicationContext(), "FINISHED", Toast.LENGTH_SHORT).show();
+            Intent nextScreen = new Intent(getApplicationContext(), FinalPageActivity.class);
+//            nextScreen.putExtra("Category", ((TextView) view).getText());
+            startActivity(nextScreen);
         }
     }
 

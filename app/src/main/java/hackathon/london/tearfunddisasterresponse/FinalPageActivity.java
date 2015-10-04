@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,19 +19,24 @@ import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 public class FinalPageActivity extends AppCompatActivity {
 
+    Button.OnClickListener startAgainButtonListener =
+            new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToStartPage = new Intent(getApplicationContext(), PhotoIntentActivity.class);
+                    startActivity(goToStartPage);
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_final_page);
+
         final Button button = (Button) findViewById(R.id.startAgainButton);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToStartPage = new Intent(FinalPageActivity.this, PhotoIntentActivity.class);
-                startActivity(goToStartPage);
-            }
-        });
+        button.setOnClickListener(startAgainButtonListener);
 
         button.setEnabled(false);
 
@@ -40,7 +46,8 @@ public class FinalPageActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 TextView progressText = (TextView) findViewById(R.id.progressText);
-                progressText.setText(Resources.getSystem().getString(R.string.sending_complete));
+                progressText.setText("Sending Complete");
+//                progressText.setText(Resources.getSystem().getString(R.string.sending_complete));
                 button.setEnabled(true);
             }
         }, millisToWait);
