@@ -16,7 +16,13 @@
 
         <activity android:name=".photobyintent.PhotoIntentActivity"
             android:label="@string/app_name">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".LandingActivity"
             android:label="@string/app_name" >
@@ -25,22 +31,9 @@
             android:name=".LocationActivity"
             android:label="@string/title_activity_location"
             android:theme="@style/AppTheme.NoActionBar" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".questions.QuestionsActivity"></activity>
-
-        <activity android:name="hackathon.london.tearfunddisasterresponse.QuestionActivity"
-            android:label="@string/title_activity_question"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="hackathon.london.tearfunddisasterresponse.LocationActivity" />
-        </activity>
     </application>
 
 </manifest>

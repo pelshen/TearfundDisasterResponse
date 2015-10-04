@@ -14,10 +14,14 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
+
 
 public class LocationActivity extends AppCompatActivity {
 
     private static final String TAG = "LocationActivity";
+
+    private String category;
 
     // Acquire a reference to the system Location Manager
     private LocationManager locationManager;
@@ -53,10 +57,12 @@ public class LocationActivity extends AppCompatActivity {
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
         Handler handler = new Handler();
-        int millisToWait = 700;
+        int millisToWait = 1000;
         handler.postDelayed(new Runnable() {
             public void run() {
-                Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionActivity.class);
+                Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionsActivity.class);
+                moveToQuestionsIntent.putExtra("Category", category);
+
                 startActivity(moveToQuestionsIntent);
             }
         }, millisToWait);
@@ -69,6 +75,10 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
 
         Log.d(TAG, "onCreate");
+
+
+        category = getIntent().getStringExtra("Category");
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Register the listener with the Location Manager to receive location updates
