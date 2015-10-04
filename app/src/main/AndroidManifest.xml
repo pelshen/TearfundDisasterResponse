@@ -35,11 +35,11 @@
         <activity
             android:name=".FinalPageActivity"
             android:label="@string/title_activity_final_page"
-            android:parentActivityName=".questions.QuestionsActivity"
+
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity" />
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity" />-->
         </activity>
     </application>
 
