@@ -12,5 +12,9 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
     <string name="title_activity_location">Getting Your Location</string>
-    <string name="locationString">Currently no location</string>
+    <string name="title_activity_final_page">FinalPageActivity</string>
+    <string name="final_page_title">Questions Complete!</string>
+    <string name="sending_data">Sending data...</string>
+    <string name="sending_complete">Sending Complete</string>
+    <string name="go_to_start">Start Again</string>
 </resources>
