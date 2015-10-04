@@ -1,5 +1,6 @@
 package hackathon.london.tearfunddisasterresponse;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import hackathon.london.tearfunddisasterresponse.photobyintent.PhotoIntentActivity;
 import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
-public class FinalPageActivity extends AppCompatActivity {
+public class FinalPageActivity extends Activity {
 
     Button.OnClickListener startAgainButtonListener =
             new Button.OnClickListener() {

@@ -1,5 +1,6 @@
 package hackathon.london.tearfunddisasterresponse;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +20,9 @@ import java.util.Date;
 import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends Activity {
 
     private static final String TAG = "LocationActivity";
-
-    private ProgressDialog progressDialog = new ProgressDialog(LocationActivity.this);
 
     private String category;
 
