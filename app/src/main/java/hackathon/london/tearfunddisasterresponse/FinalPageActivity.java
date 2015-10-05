@@ -29,8 +29,8 @@ public class FinalPageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ItemReport itemReport = (ItemReport) savedInstanceState.getSerializable("Report");
-        String category = savedInstanceState.getString("Category");
+        ItemReport itemReport = (ItemReport) getIntent().getSerializableExtra("Report");
+        String category = getIntent().getStringExtra("Category");
         itemReport.setCategory(category);
 
         setContentView(R.layout.activity_final_page);

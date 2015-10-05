@@ -67,6 +67,7 @@ public class LocationActivity extends Activity {
                 Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionsActivity.class);
                 moveToQuestionsIntent.putExtra("Category", category);
                 itemReport.setLocation(location.toString());
+                itemReport.setTimestamp(new Date(location.getTime()));
                 moveToQuestionsIntent.putExtra("Report", itemReport);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 startActivity(moveToQuestionsIntent);
@@ -78,7 +79,7 @@ public class LocationActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        itemReport = (ItemReport) savedInstanceState.getSerializable("Report");
+        itemReport = (ItemReport) getIntent().getSerializableExtra("Report");
         Log.d(TAG, "onCreate");
 
         category = getIntent().getStringExtra("Category");
@@ -86,7 +87,7 @@ public class LocationActivity extends Activity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, (long) 0, (float) 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 0, (float) 0, locationListener);
         Log.d(TAG, "location updates requested");
     }
 }
