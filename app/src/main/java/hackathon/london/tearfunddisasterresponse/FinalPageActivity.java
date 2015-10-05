@@ -31,7 +31,6 @@ public class FinalPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         ItemReport itemReport = (ItemReport) getIntent().getSerializableExtra("Report");
         String category = getIntent().getStringExtra("Category");
-        itemReport.setCategory(category);
 
         setContentView(R.layout.activity_final_page);
 

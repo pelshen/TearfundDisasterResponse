@@ -302,6 +302,7 @@ public class PhotoIntentActivity extends Activity {
 //				handleSmallCameraPhoto(data);
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
                 ItemReport itemReport = new ItemReport();
+                itemReport.setCategory("building");
 				nextScreen.putExtra("Category", "building");
                 nextScreen.putExtra("Report", itemReport);
 				startActivity(nextScreen);

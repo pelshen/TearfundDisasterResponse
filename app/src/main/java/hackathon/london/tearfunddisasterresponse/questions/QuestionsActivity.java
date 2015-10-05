@@ -58,6 +58,7 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
         } else {
             Intent nextScreen = new Intent(getApplicationContext(), FinalPageActivity.class);
             nextScreen.putExtra("Report", itemReport);
+            nextScreen.putExtra("Category", getIntent().getStringExtra("Category"));
             startActivity(nextScreen);
         }
     }
