@@ -167,6 +167,7 @@ public class PhotoIntentActivity extends Activity {
 			break;			
 		} // switch
 
+        Log.d("mydebugmsg", "startActivityForResult");
 		startActivityForResult(takePictureIntent, actionCode);
 	}
 
@@ -290,7 +291,9 @@ public class PhotoIntentActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
+        Log.d("mydebugmsg", "onActivityResult");
+        Log.d("mydebugmsg", data.toString());
+        switch (requestCode) {
 		case ACTION_TAKE_PHOTO_B: {
 			if (resultCode == RESULT_OK) {
 				handleBigCameraPhoto();
@@ -303,9 +306,10 @@ public class PhotoIntentActivity extends Activity {
 //				handleSmallCameraPhoto(data);
 				AmazonUploader uploader = new AmazonUploader(getApplicationContext());
 				Uri uri = (Uri) data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-				File file = new File(uri.getPath());
+				File file = new File(mCurrentPhotoPath);
 				Log.d("mydebugmsg", file.getPath());
 				uploader.uploadPhoto("testKey", file);
+
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
 				nextScreen.putExtra("Category", "building");
 				startActivity(nextScreen);
