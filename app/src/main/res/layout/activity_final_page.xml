@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".FinalPageActivity"
+    android:clickable="true"
+    android:background="@color/mainBackground">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/final_page_title"
+        android:id="@+id/title"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        style="@style/Text.Primary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/sending_data"
+        android:id="@+id/progressText"
+        android:layout_marginBottom="90dp"
+        android:layout_above="@+id/startAgainButton"
+        android:layout_centerHorizontal="true"
+        style="@style/Text.Secondary" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_to_start"
+        android:id="@+id/startAgainButton"
+        android:layout_marginBottom="81dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/progressText"
+        android:layout_alignStart="@+id/progressText"
+        android:layout_alignRight="@+id/progressText"
+        android:layout_alignEnd="@+id/progressText"
+        style="@style/Text.Button" />
+</RelativeLayout>

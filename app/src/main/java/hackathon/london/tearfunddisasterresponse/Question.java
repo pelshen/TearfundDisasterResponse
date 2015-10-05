@@ -27,4 +27,12 @@ public class Question {
         this.illustration = illustration;
         this.answers = answers;
     }
+
+    public String getQuestion() {
+        return this.question;
+    }
+
+    public ArrayList<String> getAnswers() {
+        return this.answers;
+    }
 }
