@@ -2,21 +2,18 @@ package hackathon.london.tearfunddisasterresponse;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.support.annotation.StringRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+import org.json.JSONObject;
+
 import hackathon.london.tearfunddisasterresponse.photobyintent.PhotoIntentActivity;
-import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 public class FinalPageActivity extends Activity {
 
@@ -32,6 +29,9 @@ public class FinalPageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ItemReport itemReport = (ItemReport) savedInstanceState.getSerializable("Report");
+        String category = savedInstanceState.getString("Category");
+        itemReport.setCategory(category);
 
         setContentView(R.layout.activity_final_page);
 
@@ -41,6 +41,13 @@ public class FinalPageActivity extends Activity {
 
         button.setEnabled(false);
 
+        Parse.enableLocalDatastore(getApplicationContext());
+        Parse.initialize(this, "xC0N1kQNCRAUFfKOlxQyegPXe3fZoJFllD36FWey", "PaMc1ad9VVmOWWQ2lDaLpfD3x8YO4q82jNqS1K6F");
+
+        ParseObject report = new ParseObject("report");
+        JSONObject jsonReport = itemReport.generateJSON();
+        report.put("Report", jsonReport);
+        report.saveInBackground();
         // wait a bit before changing so flow is not incomprehensible
         Handler handler = new Handler();
         int millisToWait = 1000;

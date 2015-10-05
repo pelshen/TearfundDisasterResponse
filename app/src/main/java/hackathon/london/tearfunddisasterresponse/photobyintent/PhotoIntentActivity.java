@@ -1,11 +1,5 @@
 package hackathon.london.tearfunddisasterresponse.photobyintent;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +19,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import hackathon.london.tearfunddisasterresponse.ItemReport;
 import hackathon.london.tearfunddisasterresponse.LocationActivity;
-import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
-import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -302,7 +301,9 @@ public class PhotoIntentActivity extends Activity {
 			if (resultCode == RESULT_OK) {
 //				handleSmallCameraPhoto(data);
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
+                ItemReport itemReport = new ItemReport();
 				nextScreen.putExtra("Category", "building");
+                nextScreen.putExtra("Report", itemReport);
 				startActivity(nextScreen);
 			}
 			break;

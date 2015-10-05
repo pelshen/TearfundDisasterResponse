@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Sam on 03/10/15.
  */
-public class ItemReport {
+public class ItemReport implements Serializable {
 
     private String phoneNumber = null;
     private String category = null;
@@ -117,6 +118,4 @@ public class ItemReport {
     private String getPictureUrl() {
         return PICTURE_URL_PREFIX + getTimestamp().getTime() + ".png";
     }
-
-
 }

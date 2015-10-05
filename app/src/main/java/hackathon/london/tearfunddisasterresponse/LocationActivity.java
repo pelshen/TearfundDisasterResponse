@@ -25,6 +25,7 @@ public class LocationActivity extends Activity {
     private static final String TAG = "LocationActivity";
 
     private String category;
+    private ItemReport itemReport;
 
     // Acquire a reference to the system Location Manager
     private LocationManager locationManager;
@@ -49,7 +50,7 @@ public class LocationActivity extends Activity {
         }
     };
 
-    private void makeUseOfNewLocation(Location location) {
+    private void makeUseOfNewLocation(final Location location) {
         locationManager.removeUpdates(locationListener);
         Log.d(TAG, "making use of new location...");
         // change screen state "got location!"
@@ -65,19 +66,19 @@ public class LocationActivity extends Activity {
             public void run() {
                 Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionsActivity.class);
                 moveToQuestionsIntent.putExtra("Category", category);
-
+                itemReport.setLocation(location.toString());
+                moveToQuestionsIntent.putExtra("Report", itemReport);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 startActivity(moveToQuestionsIntent);
             }
         }, millisToWait);
-
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
+        itemReport = (ItemReport) savedInstanceState.getSerializable("Report");
         Log.d(TAG, "onCreate");
 
         category = getIntent().getStringExtra("Category");
@@ -88,8 +89,4 @@ public class LocationActivity extends Activity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, (long) 0, (float) 0, locationListener);
         Log.d(TAG, "location updates requested");
     }
-
-
-
-
 }
