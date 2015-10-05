@@ -26,6 +26,7 @@ public class ItemReport implements Serializable {
     private final static String PHONE_NUMBER_NAME = "phoneNumber";
     private final static String CATEGORY_NAME = "category";
     private final static String LOCATION_NAME = "location";
+    private final static String TIME_NAME = "date/time";
     private final static String PICTURE_URL_NAME = "pictureUrl";
     private final static String NOTES_NAME = "notes";
     private final static String ANSWERS_NAME = "answers";
@@ -105,6 +106,7 @@ public class ItemReport implements Serializable {
         try {
             reportJSON.put(CATEGORY_NAME, getCategory());
             reportJSON.put(LOCATION_NAME, getLocation());
+            reportJSON.put(TIME_NAME, getTimestamp().toString());
             reportJSON.put(PHONE_NUMBER_NAME, getPhoneNumber());
             reportJSON.put(PICTURE_URL_NAME, getPictureUrl());
             reportJSON.put(NOTES_NAME, getNotes());
