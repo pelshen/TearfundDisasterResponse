@@ -4,29 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@color/mainBackground"
     tools:context=".photobyintent.PhotoIntentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="2"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center|bottom">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tearfund_logo"
+            />
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            style="@style/Text.Primary"
+            android:textAllCaps="true"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="bottom">
         <TextView
             android:text="@string/starting_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             style="@style/Text.Primary"
-            android:layout_gravity="center"
-            android:layout_margin="20sp" />
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="16sp"
+            android:layout_marginRight="16sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:orientation="vertical"
         android:baselineAligned="false">
         <LinearLayout
@@ -35,9 +57,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:layout_marginTop="10sp">
+            android:layout_marginLeft="16sp"
+            android:layout_marginRight="16sp"
+            android:layout_marginTop="16sp">
 
             <ImageButton
                 android:id="@+id/btnIntendHealth"
@@ -70,16 +92,16 @@
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginRight="10sp"
-            android:layout_marginLeft="10sp"
-            android:layout_marginBottom="10sp">
+            android:layout_marginRight="16sp"
+            android:layout_marginLeft="16sp"
+            android:layout_marginBottom="16sp">
 
             <ImageButton
                 android:id="@+id/btnIntendBuilding"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="4dp"
+                android:layout_margin="0dp"
                 android:src="@drawable/building_cat_ic"
                 style="@style/Text.Button"
                 android:contentDescription=""
@@ -92,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="4dp"
+                android:layout_margin="0dp"
                 android:src="@drawable/water_cat_ic"
                 style="@style/Text.Button"
                 android:contentDescription=""
