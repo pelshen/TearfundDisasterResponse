@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class ItemReport implements Serializable {
 
+    private String deviceId = null;
     private String phoneNumber = null;
     private String category = null;
     private String location = null;
@@ -23,6 +24,7 @@ public class ItemReport implements Serializable {
     private String notes = null;
     private Date timestamp = null;
 
+    private final static String DEVICE_ID_NAME = "deviceId";
     private final static String PHONE_NUMBER_NAME = "phoneNumber";
     private final static String CATEGORY_NAME = "category";
     private final static String LOCATION_NAME = "location";
@@ -38,7 +40,16 @@ public class ItemReport implements Serializable {
     }
 
     public ItemReport(String phoneNumber) {
+        super();
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getPhoneNumber() {
@@ -104,6 +115,7 @@ public class ItemReport implements Serializable {
     public JSONObject generateJSON() {
         JSONObject reportJSON = new JSONObject();
         try {
+            reportJSON.put(DEVICE_ID_NAME, getDeviceId());
             reportJSON.put(CATEGORY_NAME, getCategory());
             reportJSON.put(LOCATION_NAME, getLocation());
             reportJSON.put(TIME_NAME, getTimestamp().toString());
