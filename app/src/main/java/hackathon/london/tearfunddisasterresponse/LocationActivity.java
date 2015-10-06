@@ -1,6 +1,7 @@
 package hackathon.london.tearfunddisasterresponse;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -47,6 +49,10 @@ public class LocationActivity extends Activity {
 
         public void onProviderDisabled(String provider) {
             Log.d(TAG, "provider disabled");
+            Toast providerDisabledToast = Toast.makeText(getApplicationContext(),
+                    "Location updates disabled! Please make sure you are connected to your network",
+                    Toast.LENGTH_LONG);
+            providerDisabledToast.show();
         }
     };
 
@@ -59,8 +65,6 @@ public class LocationActivity extends Activity {
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
         Handler handler = new Handler();
-        /* TODO add tick */
-
         int millisToWait = 1000;
         handler.postDelayed(new Runnable() {
             public void run() {

@@ -234,23 +234,8 @@ public class PhotoIntentActivity extends Activity {
 		setContentView(R.layout.main);
 
 		mImageView = (ImageView) findViewById(R.id.imageView1);
-//		mVideoView = (VideoView) findViewById(R.id.videoView1);
 		mImageBitmap = null;
 		mVideoUri = null;
-
-//		Button picBtn = (Button) findViewById(R.id.btnIntend);
-//		setBtnListenerOrDisable(
-//				picBtn,
-//				mTakePicOnClickListener,
-//				MediaStore.ACTION_IMAGE_CAPTURE
-//		);
-
-//		Button picSBtn = (Button) findViewById(R.id.btnIntendS);
-//		setBtnListenerOrDisable(
-//				picSBtn,
-//				mTakePicSOnClickListener,
-//				MediaStore.ACTION_IMAGE_CAPTURE
-//		);
 
 		ImageButton picHealthBtn = (ImageButton) findViewById(R.id.btnIntendHealth);
 		setBtnListenerOrDisable(
@@ -272,13 +257,6 @@ public class PhotoIntentActivity extends Activity {
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
-
-//		Button vidBtn = (Button) findViewById(R.id.btnIntendV);
-//		setBtnListenerOrDisable(
-//				vidBtn,
-//				mTakeVidOnClickListener,
-//				MediaStore.ACTION_VIDEO_CAPTURE
-//		);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 			mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
@@ -323,9 +301,7 @@ public class PhotoIntentActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
-//		outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
 		outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
-//		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY, (mVideoUri != null) );
 		super.onSaveInstanceState(outState);
 	}
 
@@ -333,17 +309,11 @@ public class PhotoIntentActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-//		mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
 		mImageView.setImageBitmap(mImageBitmap);
 		mImageView.setVisibility(
 				savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
 						ImageView.VISIBLE : ImageView.INVISIBLE
 		);
-//		mVideoView.setVideoURI(mVideoUri);
-//		mVideoView.setVisibility(
-//				savedInstanceState.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ?
-//						ImageView.VISIBLE : ImageView.INVISIBLE
-//		);
 	}
 
 	/**
