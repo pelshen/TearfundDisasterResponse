@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ItemReport implements Serializable {
     private static final String PICTURE_URL_PREFIX = "https://s3-eu-west-1.amazonaws.com/tearfunddr/";
 
     public ItemReport() {
+        pictures = new ArrayList<String>();
 
     }
 
@@ -138,6 +140,11 @@ public class ItemReport implements Serializable {
 
     public void addPicture(String name) {
         String link = PICTURE_URL_PREFIX + name;
+        if (pictures == null) {
+            pictures = new ArrayList<String>();
+        }
+
         pictures.add(link);
+
     }
 }

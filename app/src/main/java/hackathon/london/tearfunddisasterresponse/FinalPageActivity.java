@@ -57,7 +57,7 @@ public class FinalPageActivity extends Activity {
         }
 
         Parse.enableLocalDatastore(getApplicationContext());
-        Parse.initialize(this, "xC0N1kQNCRAUFfKOlxQyegPXe3fZoJFllD36FWey", "PaMc1ad9VVmOWWQ2lDaLpfD3x8YO4q82jNqS1K6F");
+        Parse.initialize(getApplicationContext(), "xC0N1kQNCRAUFfKOlxQyegPXe3fZoJFllD36FWey", "PaMc1ad9VVmOWWQ2lDaLpfD3x8YO4q82jNqS1K6F");
 
         ParseObject report = new ParseObject("report");
         JSONObject jsonReport = itemReport.generateJSON();
