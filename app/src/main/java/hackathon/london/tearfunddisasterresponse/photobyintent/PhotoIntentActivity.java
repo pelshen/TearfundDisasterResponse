@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
@@ -27,6 +28,7 @@ import java.util.List;
 import hackathon.london.tearfunddisasterresponse.LocationActivity;
 import hackathon.london.tearfunddisasterresponse.R;
 import hackathon.london.tearfunddisasterresponse.amazons3.AmazonUploader;
+import hackathon.london.tearfunddisasterresponse.ItemReport;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -37,7 +39,6 @@ public class PhotoIntentActivity extends Activity {
 
 	private static final String BITMAP_STORAGE_KEY = "viewbitmap";
 	private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
-	private ImageView mImageView;
 	private Bitmap mImageBitmap;
 
 	private static final String VIDEO_STORAGE_KEY = "viewvideo";
@@ -52,18 +53,18 @@ public class PhotoIntentActivity extends Activity {
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
-	
+
 	/* Photo album for this application */
 	private String getAlbumName() {
 		return getString(R.string.album_name);
 	}
 
-	
+
 	private File getAlbumDir() {
 		File storageDir = null;
 
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			
+
 			storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
 
 			if (storageDir != null) {
@@ -74,11 +75,11 @@ public class PhotoIntentActivity extends Activity {
 					}
 				}
 			}
-			
+
 		} else {
 			Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
 		}
-		
+
 		return storageDir;
 	}
 
@@ -105,8 +106,8 @@ public class PhotoIntentActivity extends Activity {
 		/* So pre-scale the target bitmap into which the file is decoded */
 
 		/* Get the size of the ImageView */
-		int targetW = mImageView.getWidth();
-		int targetH = mImageView.getHeight();
+		int targetW = 100;
+		int targetH = 100;
 
 		/* Get the size of the image */
 		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -114,11 +115,11 @@ public class PhotoIntentActivity extends Activity {
 		BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 		int photoW = bmOptions.outWidth;
 		int photoH = bmOptions.outHeight;
-		
+
 		/* Figure out which way needs to be reduced less */
 		int scaleFactor = 1;
 		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
+			scaleFactor = Math.min(photoW/targetW, photoH/targetH);
 		}
 
 		/* Set bitmap options to scale the image decode target */
@@ -128,12 +129,9 @@ public class PhotoIntentActivity extends Activity {
 
 		/* Decode the JPEG file into a Bitmap */
 		Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		
+
 		/* Associate the Bitmap to the ImageView */
-		mImageView.setImageBitmap(bitmap);
 		mVideoUri = null;
-		mImageView.setVisibility(View.VISIBLE);
-		mVideoView.setVisibility(View.INVISIBLE);
 	}
 
 	private void galleryAddPic() {
@@ -179,10 +177,7 @@ public class PhotoIntentActivity extends Activity {
 	private void handleSmallCameraPhoto(Intent intent) {
 		Bundle extras = intent.getExtras();
 		mImageBitmap = (Bitmap) extras.get("data");
-		mImageView.setImageBitmap(mImageBitmap);
 		mVideoUri = null;
-		mImageView.setVisibility(View.VISIBLE);
-//		mVideoView.setVisibility(View.INVISIBLE);
 	}
 
 	private void handleBigCameraPhoto() {
@@ -200,7 +195,6 @@ public class PhotoIntentActivity extends Activity {
 		mVideoView.setVideoURI(mVideoUri);
 		mImageBitmap = null;
 		mVideoView.setVisibility(View.VISIBLE);
-		mImageView.setVisibility(View.INVISIBLE);
 	}
 
 	Button.OnClickListener mTakePicOnClickListener = 
@@ -234,52 +228,29 @@ public class PhotoIntentActivity extends Activity {
 
 		setContentView(R.layout.main);
 
-		mImageView = (ImageView) findViewById(R.id.imageView1);
-//		mVideoView = (VideoView) findViewById(R.id.videoView1);
 		mImageBitmap = null;
 		mVideoUri = null;
 
-//		Button picBtn = (Button) findViewById(R.id.btnIntend);
-//		setBtnListenerOrDisable(
-//				picBtn,
-//				mTakePicOnClickListener,
-//				MediaStore.ACTION_IMAGE_CAPTURE
-//		);
-
-//		Button picSBtn = (Button) findViewById(R.id.btnIntendS);
-//		setBtnListenerOrDisable(
-//				picSBtn,
-//				mTakePicSOnClickListener,
-//				MediaStore.ACTION_IMAGE_CAPTURE
-//		);
-
-		Button picHealthBtn = (Button) findViewById(R.id.btnIntendHealth);
+		ImageButton picHealthBtn = (ImageButton) findViewById(R.id.btnIntendHealth);
 		setBtnListenerOrDisable(
 				picHealthBtn,
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
-		Button picWaterBtn = (Button) findViewById(R.id.btnIntendWater);
+		ImageButton picWaterBtn = (ImageButton) findViewById(R.id.btnIntendWater);
 		setBtnListenerOrDisable(
 				picWaterBtn,
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
-		Button picBuildingBtn = (Button) findViewById(R.id.btnIntendBuilding);
+		ImageButton picBuildingBtn = (ImageButton) findViewById(R.id.btnIntendBuilding);
 		setBtnListenerOrDisable(
 				picBuildingBtn,
 				mTakePicSOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
-
-//		Button vidBtn = (Button) findViewById(R.id.btnIntendV);
-//		setBtnListenerOrDisable(
-//				vidBtn,
-//				mTakeVidOnClickListener,
-//				MediaStore.ACTION_VIDEO_CAPTURE
-//		);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 			mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
@@ -311,7 +282,10 @@ public class PhotoIntentActivity extends Activity {
 				uploader.uploadPhoto("testKey", file);
 
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
+                ItemReport itemReport = new ItemReport();
+                itemReport.setCategory("building");
 				nextScreen.putExtra("Category", "building");
+                nextScreen.putExtra("Report", itemReport);
 				startActivity(nextScreen);
 			}
 			break;
@@ -330,9 +304,7 @@ public class PhotoIntentActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
-//		outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
 		outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
-//		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY, (mVideoUri != null) );
 		super.onSaveInstanceState(outState);
 	}
 
@@ -340,17 +312,6 @@ public class PhotoIntentActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-//		mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
-		mImageView.setImageBitmap(mImageBitmap);
-		mImageView.setVisibility(
-				savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
-						ImageView.VISIBLE : ImageView.INVISIBLE
-		);
-//		mVideoView.setVideoURI(mVideoUri);
-//		mVideoView.setVisibility(
-//				savedInstanceState.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ?
-//						ImageView.VISIBLE : ImageView.INVISIBLE
-//		);
 	}
 
 	/**
@@ -376,15 +337,13 @@ public class PhotoIntentActivity extends Activity {
 	}
 
 	private void setBtnListenerOrDisable( 
-			Button btn, 
-			Button.OnClickListener onClickListener,
+			ImageButton btn,
+			ImageButton.OnClickListener onClickListener,
 			String intentName
 	) {
 		if (isIntentAvailable(this, intentName)) {
 			btn.setOnClickListener(onClickListener);        	
 		} else {
-			btn.setText( 
-				getText(R.string.cannot).toString() + " " + btn.getText());
 			btn.setClickable(false);
 		}
 	}

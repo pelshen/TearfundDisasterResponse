@@ -1,5 +1,8 @@
 package hackathon.london.tearfunddisasterresponse;
 
+import android.app.Activity;
+import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -10,18 +13,21 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
 import hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity;
 
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends Activity {
 
     private static final String TAG = "LocationActivity";
 
     private String category;
+    private ItemReport itemReport;
 
     // Acquire a reference to the system Location Manager
     private LocationManager locationManager;
@@ -43,16 +49,18 @@ public class LocationActivity extends AppCompatActivity {
 
         public void onProviderDisabled(String provider) {
             Log.d(TAG, "provider disabled");
+            Toast providerDisabledToast = Toast.makeText(getApplicationContext(),
+                    "Location updates disabled! Please make sure you are connected to your network",
+                    Toast.LENGTH_LONG);
+            providerDisabledToast.show();
         }
     };
 
-    private void makeUseOfNewLocation(Location location) {
+    private void makeUseOfNewLocation(final Location location) {
         locationManager.removeUpdates(locationListener);
         Log.d(TAG, "making use of new location...");
         // change screen state "got location!"
         TextView locationStateTextView = (TextView) findViewById(R.id.locationState);
-
-        locationStateTextView.setText("Found.");
 
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
@@ -62,20 +70,21 @@ public class LocationActivity extends AppCompatActivity {
             public void run() {
                 Intent moveToQuestionsIntent = new Intent(LocationActivity.this, QuestionsActivity.class);
                 moveToQuestionsIntent.putExtra("Category", category);
-
+                itemReport.setLocation(location.toString());
+                itemReport.setTimestamp(new Date(location.getTime()));
+                moveToQuestionsIntent.putExtra("Report", itemReport);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 startActivity(moveToQuestionsIntent);
             }
         }, millisToWait);
-
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
+        itemReport = (ItemReport) getIntent().getSerializableExtra("Report");
         Log.d(TAG, "onCreate");
-
 
         category = getIntent().getStringExtra("Category");
 
@@ -85,8 +94,4 @@ public class LocationActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, (long) 0, (float) 0, locationListener);
         Log.d(TAG, "location updates requested");
     }
-
-
-
-
 }

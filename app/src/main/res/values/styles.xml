@@ -1,14 +1,23 @@
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background" >@color/mainBackground</item>
+        <item name="android:colorBackground">@color/mainBackground</item>
+    </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="Text.Primary" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:textSize" >24sp</item>
+        <item name="android:textColor">@color/secondary</item>
     </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="Text.Secondary" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:textSize" >24sp</item>
+        <item name="android:textColor">@color/secondary</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Text.Button" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:background">@color/tertiary</item>
+    </style>
 
 </resources>

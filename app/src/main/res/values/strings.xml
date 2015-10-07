@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TearfundDisasterResponse</string>
+    <string name="app_name">Disaster Response</string>
 
     <string name="title_activity_questions">Questions</string>
 
@@ -16,5 +16,6 @@
     <string name="final_page_title">Questions Complete!</string>
     <string name="sending_data">Sending data...</string>
     <string name="sending_complete">Sending Complete</string>
-    <string name="go_to_start">Start Again</string>
+    <string name="go_to_start">Start Over</string>
+    <string name="starting_question">Choose a category to begin logging your report</string>
 </resources>
