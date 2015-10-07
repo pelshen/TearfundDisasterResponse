@@ -38,7 +38,6 @@ public class PhotoIntentActivity extends Activity {
 
 	private static final String BITMAP_STORAGE_KEY = "viewbitmap";
 	private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
-	private ImageView mImageView;
 	private Bitmap mImageBitmap;
 
 	private static final String VIDEO_STORAGE_KEY = "viewvideo";
@@ -53,18 +52,18 @@ public class PhotoIntentActivity extends Activity {
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
-	
+
 	/* Photo album for this application */
 	private String getAlbumName() {
 		return getString(R.string.album_name);
 	}
 
-	
+
 	private File getAlbumDir() {
 		File storageDir = null;
 
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			
+
 			storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
 
 			if (storageDir != null) {
@@ -75,11 +74,11 @@ public class PhotoIntentActivity extends Activity {
 					}
 				}
 			}
-			
+
 		} else {
 			Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
 		}
-		
+
 		return storageDir;
 	}
 
@@ -106,8 +105,8 @@ public class PhotoIntentActivity extends Activity {
 		/* So pre-scale the target bitmap into which the file is decoded */
 
 		/* Get the size of the ImageView */
-		int targetW = mImageView.getWidth();
-		int targetH = mImageView.getHeight();
+		int targetW = 100;
+		int targetH = 100;
 
 		/* Get the size of the image */
 		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -115,11 +114,11 @@ public class PhotoIntentActivity extends Activity {
 		BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 		int photoW = bmOptions.outWidth;
 		int photoH = bmOptions.outHeight;
-		
+
 		/* Figure out which way needs to be reduced less */
 		int scaleFactor = 1;
 		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
+			scaleFactor = Math.min(photoW/targetW, photoH/targetH);
 		}
 
 		/* Set bitmap options to scale the image decode target */
@@ -129,12 +128,9 @@ public class PhotoIntentActivity extends Activity {
 
 		/* Decode the JPEG file into a Bitmap */
 		Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		
+
 		/* Associate the Bitmap to the ImageView */
-		mImageView.setImageBitmap(bitmap);
 		mVideoUri = null;
-		mImageView.setVisibility(View.VISIBLE);
-		mVideoView.setVisibility(View.INVISIBLE);
 	}
 
 	private void galleryAddPic() {
@@ -179,10 +175,7 @@ public class PhotoIntentActivity extends Activity {
 	private void handleSmallCameraPhoto(Intent intent) {
 		Bundle extras = intent.getExtras();
 		mImageBitmap = (Bitmap) extras.get("data");
-		mImageView.setImageBitmap(mImageBitmap);
 		mVideoUri = null;
-		mImageView.setVisibility(View.VISIBLE);
-//		mVideoView.setVisibility(View.INVISIBLE);
 	}
 
 	private void handleBigCameraPhoto() {
@@ -200,7 +193,6 @@ public class PhotoIntentActivity extends Activity {
 		mVideoView.setVideoURI(mVideoUri);
 		mImageBitmap = null;
 		mVideoView.setVisibility(View.VISIBLE);
-		mImageView.setVisibility(View.INVISIBLE);
 	}
 
 	Button.OnClickListener mTakePicOnClickListener = 
@@ -233,7 +225,6 @@ public class PhotoIntentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		mImageView = (ImageView) findViewById(R.id.imageView1);
 		mImageBitmap = null;
 		mVideoUri = null;
 
@@ -309,11 +300,6 @@ public class PhotoIntentActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-		mImageView.setImageBitmap(mImageBitmap);
-		mImageView.setVisibility(
-				savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
-						ImageView.VISIBLE : ImageView.INVISIBLE
-		);
 	}
 
 	/**
