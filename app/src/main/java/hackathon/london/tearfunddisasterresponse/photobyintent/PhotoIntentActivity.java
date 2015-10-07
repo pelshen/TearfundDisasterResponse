@@ -16,19 +16,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.VideoView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import hackathon.london.tearfunddisasterresponse.ItemReport;
 import hackathon.london.tearfunddisasterresponse.LocationActivity;
 import hackathon.london.tearfunddisasterresponse.R;
 import hackathon.london.tearfunddisasterresponse.amazons3.AmazonUploader;
-import hackathon.london.tearfunddisasterresponse.ItemReport;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -274,16 +274,15 @@ public class PhotoIntentActivity extends Activity {
 
 		case ACTION_TAKE_PHOTO_S: {
 			if (resultCode == RESULT_OK) {
-//				handleSmallCameraPhoto(data);
 				AmazonUploader uploader = new AmazonUploader(getApplicationContext());
-				Uri uri = (Uri) data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
 				File file = new File(mCurrentPhotoPath);
-				Log.d("mydebugmsg", file.getPath());
-				uploader.uploadPhoto("testKey", file);
+				String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
+				uploader.uploadPhoto(time, file);
 
 				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
                 ItemReport itemReport = new ItemReport();
                 itemReport.setCategory("building");
+				itemReport.addPicture(time);
 				nextScreen.putExtra("Category", "building");
                 nextScreen.putExtra("Report", itemReport);
 				startActivity(nextScreen);

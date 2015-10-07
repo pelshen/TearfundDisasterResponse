@@ -1,13 +1,12 @@
 package hackathon.london.tearfunddisasterresponse;
 
-import android.graphics.Bitmap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +18,7 @@ public class ItemReport implements Serializable {
     private String phoneNumber = null;
     private String category = null;
     private String location = null;
-    private Bitmap picture = null;
+    private List<String> pictures = null;
     private HashMap<String, String> answers = new HashMap<>();
     private String notes = null;
     private Date timestamp = null;
@@ -29,11 +28,11 @@ public class ItemReport implements Serializable {
     private final static String CATEGORY_NAME = "category";
     private final static String LOCATION_NAME = "location";
     private final static String TIME_NAME = "date/time";
-    private final static String PICTURE_URL_NAME = "pictureUrl";
+    private final static String PICTURES_NAME = "pictureLinkList";
     private final static String NOTES_NAME = "notes";
     private final static String ANSWERS_NAME = "answers";
 
-    private static final String PICTURE_URL_PREFIX = "http://www.example.com/path/";
+    private static final String PICTURE_URL_PREFIX = "https://s3-eu-west-1.amazonaws.com/tearfunddr/";
 
     public ItemReport() {
 
@@ -76,14 +75,6 @@ public class ItemReport implements Serializable {
         this.location = location;
     }
 
-    public Bitmap getPicture() {
-        return this.picture;
-    }
-
-    public void setPicture(Bitmap picture) {
-        this.picture = picture;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }
@@ -120,7 +111,7 @@ public class ItemReport implements Serializable {
             reportJSON.put(LOCATION_NAME, getLocation());
             reportJSON.put(TIME_NAME, getTimestamp().toString());
             reportJSON.put(PHONE_NUMBER_NAME, getPhoneNumber());
-            reportJSON.put(PICTURE_URL_NAME, getPictureUrl());
+            reportJSON.put(PICTURES_NAME, createPictureList());
             reportJSON.put(NOTES_NAME, getNotes());
             reportJSON.put(ANSWERS_NAME, new JSONObject(getAnswers()));
         } catch (JSONException e) {
@@ -129,7 +120,24 @@ public class ItemReport implements Serializable {
         return reportJSON;
     }
 
-    private String getPictureUrl() {
-        return PICTURE_URL_PREFIX + getTimestamp().getTime() + ".png";
+    private String createPictureList() {
+        String pictureLinks = "";
+        for (String pictureLink : getPictures()) {
+            pictureLinks += pictureLink + " ";
+        }
+        return pictureLinks;
+    }
+
+    public List<String> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
+    }
+
+    public void addPicture(String name) {
+        String link = PICTURE_URL_PREFIX + name;
+        pictures.add(link);
     }
 }
