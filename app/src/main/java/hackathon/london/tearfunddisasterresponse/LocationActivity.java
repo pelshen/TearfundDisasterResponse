@@ -59,8 +59,6 @@ public class LocationActivity extends Activity {
     private void makeUseOfNewLocation(final Location location) {
         locationManager.removeUpdates(locationListener);
         Log.d(TAG, "making use of new location...");
-        // change screen state "got location!"
-        TextView locationStateTextView = (TextView) findViewById(R.id.locationState);
 
         // move to next app
         // wait a bit before changing so flow is not incomprehensible
