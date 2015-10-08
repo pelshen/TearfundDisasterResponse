@@ -23,7 +23,7 @@
             android:text="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/title"
             style="@style/Text.Primary"
             android:textAllCaps="true"
             android:layout_gravity="center"/>
@@ -38,7 +38,7 @@
             android:text="@string/starting_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/question"
             style="@style/Text.Primary"
             android:gravity="center_horizontal"
             android:layout_marginLeft="16sp"

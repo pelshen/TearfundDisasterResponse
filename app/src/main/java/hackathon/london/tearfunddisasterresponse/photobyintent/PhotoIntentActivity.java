@@ -263,40 +263,24 @@ public class PhotoIntentActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("mydebugmsg", "onActivityResult");
-        Log.d("mydebugmsg", data.toString());
-        switch (requestCode) {
-		case ACTION_TAKE_PHOTO_B: {
-			if (resultCode == RESULT_OK) {
-				handleBigCameraPhoto();
-			}
-			break;
-		} // ACTION_TAKE_PHOTO_B
 
-		case ACTION_TAKE_PHOTO_S: {
-			if (resultCode == RESULT_OK) {
-				AmazonUploader uploader = new AmazonUploader(getApplicationContext());
-				File file = new File(mCurrentPhotoPath);
-				String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
-				uploader.uploadPhoto(time, file);
+        if (requestCode != ACTION_TAKE_PHOTO_S || resultCode != RESULT_OK) {
+			Log.d("mydebugmsg", "Activity wasn't an image or wasn't okay.");
+			return;
+		}
 
-				Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
-                ItemReport itemReport = new ItemReport();
-                itemReport.setCategory("building");
-				itemReport.addPicture(time);
-				nextScreen.putExtra("Category", "building");
-                nextScreen.putExtra("Report", itemReport);
-				startActivity(nextScreen);
-			}
-			break;
-		} // ACTION_TAKE_PHOTO_S
+		AmazonUploader uploader = new AmazonUploader(getApplicationContext());
+		File file = new File(mCurrentPhotoPath);
+		String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
+		uploader.uploadPhoto(time, file);
 
-		case ACTION_TAKE_VIDEO: {
-			if (resultCode == RESULT_OK) {
-				handleCameraVideo(data);
-			}
-			break;
-		} // ACTION_TAKE_VIDEO
-		} // switch
+		Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
+		ItemReport itemReport = new ItemReport();
+		itemReport.setCategory("building");
+		itemReport.addPicture(time);
+		nextScreen.putExtra("Category", "building");
+		nextScreen.putExtra("Report", itemReport);
+		startActivity(nextScreen);
 	}
 
 	// Some lifecycle callbacks so that the image can survive orientation change
