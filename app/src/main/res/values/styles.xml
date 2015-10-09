@@ -2,6 +2,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background" >@color/mainBackground</item>
         <item name="android:colorBackground">@color/mainBackground</item>
+        <item name="android:colorPrimaryDark">@color/primaryDark</item>
     </style>
 
     <style name="Text.Primary" parent="ThemeOverlay.AppCompat.Light" >

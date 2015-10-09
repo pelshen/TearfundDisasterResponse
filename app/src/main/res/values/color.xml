@@ -4,4 +4,5 @@
     <color name="tertiary">#FCD900</color>
 
     <color name="mainBackground">@color/primary</color>
+    <color name="primaryDark">#076466</color>
 </resources>
