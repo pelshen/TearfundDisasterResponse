@@ -1,51 +1,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center|bottom"
-    tools:context="hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    tools:context="hackathon.london.tearfunddisasterresponse.questions.QuestionsActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
         android:layout_weight="1"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
-        <ImageButton
-            android:id="@+id/btnIntendBuilding"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:src="@drawable/building_ref_ic"
-            android:layout_gravity="bottom"
-            android:background="@android:color/transparent" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Additional Details"
-            style="@style/Text.Primary"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="16dp"/>
-    </LinearLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/question_place_holder"
+        android:id="@+id/questionTitle"
+        style="@style/Text.Primary"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:foregroundGravity="center" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:layout_margin="16dp">
-        <TextView
-            android:id="@+id/questionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="What is the super long question?"
-            android:gravity="center"
-            style="@style/Text.Primary" />
-    
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:baselineAligned="false">
         <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@android:id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom"/>
+            style="@style/Text.Secondary"
+            tools:listitem="@android:layout/simple_list_item_1"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
+
 </LinearLayout>

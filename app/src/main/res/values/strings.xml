@@ -18,4 +18,5 @@
     <string name="sending_complete">Sending Complete</string>
     <string name="go_to_start">Start Over</string>
     <string name="starting_question">Choose a category to begin logging your report</string>
+    <string name="question_place_holder">What is the super long question?</string>
 </resources>
