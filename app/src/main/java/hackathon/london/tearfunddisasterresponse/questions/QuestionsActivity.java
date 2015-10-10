@@ -25,6 +25,7 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
     private ItemReport itemReport;
     private String currentQuestionString;
     private ArrayList<String> answers;
+    private Question question;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,11 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
         } else {
             Log.d(LOGTAG, "itemReport is not null");
         }
-        Questions questionsClass = new Questions();
-        Question question = questionsClass.getNextQuestion(getIntent().getStringExtra("Category"));
+        Questions questionsClass = new Questions(getApplicationContext());
+        question = questionsClass.getNextQuestion(getIntent().getStringExtra("Category"));
         if(question != null) {
-            answers = question.getAnswers();
-            currentQuestionString = question.getQuestion();
+            answers = question.answers();
+            currentQuestionString = question.getQuestionText();
 
             final TextView textViewToChange = (TextView) findViewById(R.id.questionTitle);
             textViewToChange.setText(currentQuestionString);
@@ -67,7 +68,7 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             itemReport.answerQuestion(currentQuestionString, answers.get(position));
             Intent nextScreen = new Intent(getApplicationContext(), QuestionsActivity.class);
-            nextScreen.putExtra("Category", ((TextView) view).getText());
+            nextScreen.putExtra("Category", question.nextQuestion(answers.get(position)));
             nextScreen.putExtra("Report", itemReport);
             startActivity(nextScreen);
     }
