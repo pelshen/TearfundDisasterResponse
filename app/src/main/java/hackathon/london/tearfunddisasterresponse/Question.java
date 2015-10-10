@@ -1,7 +1,5 @@
 package hackathon.london.tearfunddisasterresponse;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

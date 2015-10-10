@@ -1,7 +1,6 @@
 package hackathon.london.tearfunddisasterresponse;
 
 import android.content.Context;
-import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -9,7 +8,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,11 +34,7 @@ public class Questions {
 
             parseXML(parser);
 
-        } catch (XmlPullParserException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
 
@@ -52,10 +46,10 @@ public class Questions {
         String answerText = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
-            String name = null;
+            String name;
             switch (eventType) {
                 case XmlPullParser.START_DOCUMENT:
-                    questionsList = new HashMap<String, Question>();
+                    questionsList = new HashMap<>();
                     break;
                 case XmlPullParser.START_TAG:
                     name = parser.getName();
