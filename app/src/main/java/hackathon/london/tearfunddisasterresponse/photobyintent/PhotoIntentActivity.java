@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.VideoView;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,18 +31,11 @@ import hackathon.london.tearfunddisasterresponse.amazons3.AmazonUploader;
 
 public class PhotoIntentActivity extends Activity {
 
-	private static final int ACTION_TAKE_PHOTO_B = 1;
 	private static final int ACTION_TAKE_PHOTO_S = 2;
-	private static final int ACTION_TAKE_VIDEO = 3;
 
 	private static final String BITMAP_STORAGE_KEY = "viewbitmap";
 	private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
 	private Bitmap mImageBitmap;
-
-	private static final String VIDEO_STORAGE_KEY = "viewvideo";
-	private static final String VIDEOVIEW_VISIBILITY_STORAGE_KEY = "videoviewvisibility";
-	private VideoView mVideoView;
-	private Uri mVideoUri;
 
 	private String mCurrentPhotoPath;
 
@@ -53,6 +44,8 @@ public class PhotoIntentActivity extends Activity {
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
+	private String category;
+
 
 	/* Photo album for this application */
 	private String getAlbumName() {
@@ -60,6 +53,9 @@ public class PhotoIntentActivity extends Activity {
 	}
 
 
+	/*
+	 * Get directory for album that photos will be stored in
+	 */
 	private File getAlbumDir() {
 		File storageDir = null;
 
@@ -88,8 +84,7 @@ public class PhotoIntentActivity extends Activity {
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
 		File albumF = getAlbumDir();
-		File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
-		return imageF;
+		return File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
 	}
 
 	private File setUpPhotoFile() throws IOException {
@@ -100,55 +95,13 @@ public class PhotoIntentActivity extends Activity {
 		return f;
 	}
 
-	private void setPic() {
-
-		/* There isn't enough memory to open up more than a couple camera photos */
-		/* So pre-scale the target bitmap into which the file is decoded */
-
-		/* Get the size of the ImageView */
-		int targetW = 100;
-		int targetH = 100;
-
-		/* Get the size of the image */
-		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-		bmOptions.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		int photoW = bmOptions.outWidth;
-		int photoH = bmOptions.outHeight;
-
-		/* Figure out which way needs to be reduced less */
-		int scaleFactor = 1;
-		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-		}
-
-		/* Set bitmap options to scale the image decode target */
-		bmOptions.inJustDecodeBounds = false;
-		bmOptions.inSampleSize = scaleFactor;
-		bmOptions.inPurgeable = true;
-
-		/* Decode the JPEG file into a Bitmap */
-		Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-		/* Associate the Bitmap to the ImageView */
-		mVideoUri = null;
-	}
-
-	private void galleryAddPic() {
-		    Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
-			File f = new File(mCurrentPhotoPath);
-		    Uri contentUri = Uri.fromFile(f);
-		    mediaScanIntent.setData(contentUri);
-		    this.sendBroadcast(mediaScanIntent);
-	}
-
 	private void dispatchTakePictureIntent(int actionCode) {
 
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 		switch(actionCode) {
 		case ACTION_TAKE_PHOTO_S:
-			File f = null;
+			File f;
 			
 			try {
 				f = setUpPhotoFile();
@@ -156,7 +109,6 @@ public class PhotoIntentActivity extends Activity {
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 			} catch (IOException e) {
 				e.printStackTrace();
-				f = null;
 				mCurrentPhotoPath = null;
 			}
 			break;
@@ -169,57 +121,47 @@ public class PhotoIntentActivity extends Activity {
 		startActivityForResult(takePictureIntent, actionCode);
 	}
 
-	private void dispatchTakeVideoIntent() {
-		Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-		startActivityForResult(takeVideoIntent, ACTION_TAKE_VIDEO);
-	}
+	Button.OnClickListener mTakeHealthPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "health";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
 
-	private void handleSmallCameraPhoto(Intent intent) {
-		Bundle extras = intent.getExtras();
-		mImageBitmap = (Bitmap) extras.get("data");
-		mVideoUri = null;
-	}
+	Button.OnClickListener mTakeBuildingPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "building";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
 
-	private void handleBigCameraPhoto() {
+	Button.OnClickListener mTakeWaterPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "water";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
 
-		if (mCurrentPhotoPath != null) {
-			setPic();
-			galleryAddPic();
-			mCurrentPhotoPath = null;
-		}
-
-	}
-
-	private void handleCameraVideo(Intent intent) {
-		mVideoUri = intent.getData();
-		mVideoView.setVideoURI(mVideoUri);
-		mImageBitmap = null;
-		mVideoView.setVisibility(View.VISIBLE);
-	}
-
-	Button.OnClickListener mTakePicOnClickListener = 
-		new Button.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
-		}
-	};
-
-	Button.OnClickListener mTakePicSOnClickListener = 
-		new Button.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
-		}
-	};
-
-	Button.OnClickListener mTakeVidOnClickListener = 
-		new Button.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			dispatchTakeVideoIntent();
-		}
-	};
+	Button.OnClickListener mFoodIntentOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "food";
+					Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
+					ItemReport itemReport = new ItemReport();
+					itemReport.setCategory(category);
+					itemReport.addPicture("NoPicture");
+					nextScreen.putExtra("Category", "Sample Food Question");
+					nextScreen.putExtra("Report", itemReport);
+					startActivity(nextScreen);
+				}
+			};
 
 	/** Called when the activity is first created. */
 	@Override
@@ -229,28 +171,30 @@ public class PhotoIntentActivity extends Activity {
 		setContentView(R.layout.main);
 
 		mImageBitmap = null;
-		mVideoUri = null;
 
 		ImageButton picHealthBtn = (ImageButton) findViewById(R.id.btnIntendHealth);
 		setBtnListenerOrDisable(
 				picHealthBtn,
-				mTakePicSOnClickListener,
+				mTakeHealthPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
 		ImageButton picWaterBtn = (ImageButton) findViewById(R.id.btnIntendWater);
 		setBtnListenerOrDisable(
 				picWaterBtn,
-				mTakePicSOnClickListener,
+				mTakeWaterPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
 		ImageButton picBuildingBtn = (ImageButton) findViewById(R.id.btnIntendBuilding);
 		setBtnListenerOrDisable(
 				picBuildingBtn,
-				mTakePicSOnClickListener,
+				mTakeBuildingPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
+
+		ImageButton foodBtn = (ImageButton) findViewById(R.id.btnIntendFood);
+		foodBtn.setOnClickListener(mFoodIntentOnClickListener);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 			mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
@@ -276,9 +220,15 @@ public class PhotoIntentActivity extends Activity {
 
 		Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
 		ItemReport itemReport = new ItemReport();
-		itemReport.setCategory("building");
+		itemReport.setCategory(category);
 		itemReport.addPicture(time);
-		nextScreen.putExtra("Category", "Building Status");
+		if(category.equalsIgnoreCase("health")) {
+			nextScreen.putExtra("Category", "Sample Health Question");
+		} else if(category.equalsIgnoreCase("building")) {
+			nextScreen.putExtra("Category", "Building Status");
+		} else if(category.equalsIgnoreCase("water")) {
+			nextScreen.putExtra("Category", "Sample Water Question");
+		}
 		nextScreen.putExtra("Report", itemReport);
 		startActivity(nextScreen);
 	}
