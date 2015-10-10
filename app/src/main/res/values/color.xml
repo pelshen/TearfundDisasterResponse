@@ -1,8 +1,14 @@
 <resources>
-    <color name="primary">#1B7779</color>
+    <color name="greenPrimary">#1B7779</color>
+    <color name="greenSecondary">#91ACAD</color>
+
+    <color name="yellowPrimary">#FCD900</color>
+    <color name="yellowSecondary">#F9C61D</color>
+
+    <color name="primary">@color/greenPrimary</color>
     <color name="secondary">#FFFFFF</color>
-    <color name="tertiary">#FCD900</color>
+    <color name="tertiary">@color/yellowPrimary</color>
 
     <color name="mainBackground">@color/primary</color>
-    <color name="primaryDark">#076466</color>
+    <color name="primaryDark">@color/primary</color>
 </resources>
