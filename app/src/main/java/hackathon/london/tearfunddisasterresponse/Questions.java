@@ -17,9 +17,6 @@ import java.util.HashMap;
  */
 public class Questions {
 
-    private HashMap<String, Question[]> categoryToQuestions = new HashMap<String, Question[]>();
-    private ArrayList<Question> queuedQuestions = new ArrayList<Question>();
-
     private HashMap<String, Question> questionsList = null;
 
     public Questions(Context context) {

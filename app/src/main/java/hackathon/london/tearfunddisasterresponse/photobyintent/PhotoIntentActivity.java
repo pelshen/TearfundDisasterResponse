@@ -329,7 +329,7 @@ public class PhotoIntentActivity extends Activity {
 		if(category.equalsIgnoreCase("health")) {
 			nextScreen.putExtra("Category", "Sample Health Question");
 		} else if(category.equalsIgnoreCase("building")) {
-			nextScreen.putExtra("Category", "Sample Building Question");
+			nextScreen.putExtra("Category", "Building Status");
 		} else if(category.equalsIgnoreCase("water")) {
 			nextScreen.putExtra("Category", "Sample Water Question");
 		}

@@ -13,6 +13,7 @@ public class Question {
     private String identifier = null;
     private String questionText = null;
     private HashMap<String, String> answerAndNext = new HashMap<String, String>();
+    private ArrayList<String> answers = new ArrayList<String>();
 
     public Question() {
 
@@ -36,11 +37,11 @@ public class Question {
 
     public void addAnswer(String answer, String nextQuestion) {
         answerAndNext.put(answer, nextQuestion);
+        answers.add(answer);
     }
 
     public ArrayList<String> answers() {
-        ArrayList<String> allAnswers = new ArrayList<String>(this.answerAndNext.keySet());
-        return allAnswers;
+        return this.answers;
     }
 
     public String nextQuestion(String answer) {
