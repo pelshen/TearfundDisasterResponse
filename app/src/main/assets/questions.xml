@@ -12,11 +12,11 @@
     </Answer>
     <Answer>
         <AnswerText>standing but needs repairs</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>Number of Cracks</FollowUpQuestionIdentifier>
     </Answer>
     <Answer>
         <AnswerText>standing with slight cracks</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>Number of Cracks</FollowUpQuestionIdentifier>
     </Answer>
 </Question>
 
@@ -25,18 +25,144 @@
     <QuestionText>How many people lived in the house?</QuestionText>
     <Answer>
         <AnswerText>1-2</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
     </Answer>
     <Answer>
         <AnswerText>3-5</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
     </Answer>
     <Answer>
         <AnswerText>6-8</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
     </Answer>
     <Answer>
         <AnswerText>9+</AnswerText>
-        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Number of Cracks</QuestionIdentifier>
+    <QuestionText>Approximately how many visible cracks are there?</QuestionText>
+    <Answer>
+        <AnswerText>Less than 5</AnswerText>
+        <FollowUpQuestionIdentifier>Size of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>5-10</AnswerText>
+        <FollowUpQuestionIdentifier>Size of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>11-20</AnswerText>
+        <FollowUpQuestionIdentifier>Size of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>21+</AnswerText>
+        <FollowUpQuestionIdentifier>Size of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Size of Largest Crack</QuestionIdentifier>
+    <QuestionText>Length of longest crack?</QuestionText>
+    <Answer>
+        <AnswerText>Less than 15cm</AnswerText>
+        <FollowUpQuestionIdentifier>Width of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Less than 50cm</AnswerText>
+        <FollowUpQuestionIdentifier>Width of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Less than 150cm</AnswerText>
+        <FollowUpQuestionIdentifier>Width of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>150cm+</AnswerText>
+        <FollowUpQuestionIdentifier>Width of Largest Crack</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Width of Largest Crack</QuestionIdentifier>
+    <QuestionText>Width of longest crack?</QuestionText>
+    <Answer>
+        <AnswerText>Less than 0.5cm</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Less than 1cm</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Less than 5cm</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>5cm+</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Sample Food Question</QuestionIdentifier>
+    <QuestionText>Sample Food Question</QuestionText>
+    <Answer>
+        <AnswerText>Answer 1</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 2</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 3</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 4</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Sample Water Question</QuestionIdentifier>
+    <QuestionText>Sample Water Question</QuestionText>
+    <Answer>
+        <AnswerText>Answer 1</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 2</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 3</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 4</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>Sample Health Question</QuestionIdentifier>
+    <QuestionText>Sample Health Question</QuestionText>
+    <Answer>
+        <AnswerText>Answer 1</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 2</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 3</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>Answer 4</AnswerText>
+        <FollowUpQuestionIdentifier>None</FollowUpQuestionIdentifier>
     </Answer>
 </Question>
