@@ -278,7 +278,7 @@ public class PhotoIntentActivity extends Activity {
 		ItemReport itemReport = new ItemReport();
 		itemReport.setCategory("building");
 		itemReport.addPicture(time);
-		nextScreen.putExtra("Category", "building");
+		nextScreen.putExtra("Category", "Building Status");
 		nextScreen.putExtra("Report", itemReport);
 		startActivity(nextScreen);
 	}

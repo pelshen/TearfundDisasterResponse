@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Question>
+    <QuestionIdentifier>Building Status</QuestionIdentifier>
+    <QuestionText>What is the current status of the building?</QuestionText>
+    <Answer>
+        <AnswerText>collapsed</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>partially collapsed</AnswerText>
+        <FollowUpQuestionIdentifier>People in Building</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>standing but needs repairs</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>standing with slight cracks</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
+
+<Question>
+    <QuestionIdentifier>People in Building</QuestionIdentifier>
+    <QuestionText>How many people lived in the house?</QuestionText>
+    <Answer>
+        <AnswerText>1-2</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>3-5</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>6-8</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+    <Answer>
+        <AnswerText>9+</AnswerText>
+        <FollowUpQuestionIdentifier>Size of largest crack</FollowUpQuestionIdentifier>
+    </Answer>
+</Question>
