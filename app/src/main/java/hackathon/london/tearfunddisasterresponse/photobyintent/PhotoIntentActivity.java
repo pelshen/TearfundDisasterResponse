@@ -53,6 +53,8 @@ public class PhotoIntentActivity extends Activity {
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
+	private String category;
+
 
 	/* Photo album for this application */
 	private String getAlbumName() {
@@ -213,6 +215,49 @@ public class PhotoIntentActivity extends Activity {
 		}
 	};
 
+	Button.OnClickListener mTakeHealthPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "health";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
+
+	Button.OnClickListener mTakeBuildingPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "building";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
+
+	Button.OnClickListener mTakeWaterPicOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "water";
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_S);
+				}
+			};
+
+	Button.OnClickListener mFoodIntentOnClickListener =
+			new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					category = "food";
+					String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
+					Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
+					ItemReport itemReport = new ItemReport();
+					itemReport.setCategory(category);
+					itemReport.addPicture("NoPicture");
+					nextScreen.putExtra("Category", "Sample Food Question");
+					nextScreen.putExtra("Report", itemReport);
+					startActivity(nextScreen);
+				}
+			};
+
 	Button.OnClickListener mTakeVidOnClickListener = 
 		new Button.OnClickListener() {
 		@Override
@@ -234,23 +279,26 @@ public class PhotoIntentActivity extends Activity {
 		ImageButton picHealthBtn = (ImageButton) findViewById(R.id.btnIntendHealth);
 		setBtnListenerOrDisable(
 				picHealthBtn,
-				mTakePicSOnClickListener,
+				mTakeHealthPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
 		ImageButton picWaterBtn = (ImageButton) findViewById(R.id.btnIntendWater);
 		setBtnListenerOrDisable(
 				picWaterBtn,
-				mTakePicSOnClickListener,
+				mTakeWaterPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
 
 		ImageButton picBuildingBtn = (ImageButton) findViewById(R.id.btnIntendBuilding);
 		setBtnListenerOrDisable(
 				picBuildingBtn,
-				mTakePicSOnClickListener,
+				mTakeBuildingPicOnClickListener,
 				MediaStore.ACTION_IMAGE_CAPTURE
 		);
+
+		ImageButton foodBtn = (ImageButton) findViewById(R.id.btnIntendFood);
+		foodBtn.setOnClickListener(mFoodIntentOnClickListener);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 			mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
@@ -276,9 +324,15 @@ public class PhotoIntentActivity extends Activity {
 
 		Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
 		ItemReport itemReport = new ItemReport();
-		itemReport.setCategory("building");
+		itemReport.setCategory(category);
 		itemReport.addPicture(time);
-		nextScreen.putExtra("Category", "Building Status");
+		if(category.equalsIgnoreCase("health")) {
+			nextScreen.putExtra("Category", "Sample Health Question");
+		} else if(category.equalsIgnoreCase("building")) {
+			nextScreen.putExtra("Category", "Sample Building Question");
+		} else if(category.equalsIgnoreCase("water")) {
+			nextScreen.putExtra("Category", "Sample Water Question");
+		}
 		nextScreen.putExtra("Report", itemReport);
 		startActivity(nextScreen);
 	}
