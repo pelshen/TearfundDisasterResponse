@@ -41,6 +41,11 @@
         </activity>
         <activity android:name=".questions.QuestionsActivity" />
         <activity
+            android:name=".Notes"
+            android:label="@string/notes_title"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
             android:name=".FinalPageActivity"
             android:label="@string/title_activity_final_page"
 

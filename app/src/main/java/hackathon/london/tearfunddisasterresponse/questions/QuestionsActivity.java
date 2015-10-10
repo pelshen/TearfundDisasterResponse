@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import hackathon.london.tearfunddisasterresponse.FinalPageActivity;
 import hackathon.london.tearfunddisasterresponse.ItemReport;
+import hackathon.london.tearfunddisasterresponse.Notes;
 import hackathon.london.tearfunddisasterresponse.Question;
 import hackathon.london.tearfunddisasterresponse.Questions;
 import hackathon.london.tearfunddisasterresponse.R;
@@ -57,7 +58,7 @@ public class QuestionsActivity extends ListActivity implements AdapterView.OnIte
             answersView.setOnItemClickListener(this);
 
         } else {
-            Intent nextScreen = new Intent(getApplicationContext(), FinalPageActivity.class);
+            Intent nextScreen = new Intent(getApplicationContext(), Notes.class);
             nextScreen.putExtra("Report", itemReport);
             nextScreen.putExtra("Category", getIntent().getStringExtra("Category"));
             startActivity(nextScreen);
