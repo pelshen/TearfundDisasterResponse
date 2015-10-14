@@ -7,6 +7,15 @@
     tools:context=".LocationActivity"
     android:background="@color/mainBackground"
     android:orientation="vertical">
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:text="@string/title_activity_location"
+        style="@style/Text.Primary"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:foregroundGravity="center" />
 
     <LinearLayout
         android:id="@+id/loadingPanel"

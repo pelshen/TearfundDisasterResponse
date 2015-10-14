@@ -14,7 +14,9 @@
         style="@style/Text.Primary"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:foregroundGravity="center" />
+        android:foregroundGravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
 
     <LinearLayout
         android:layout_weight="1"
@@ -29,9 +31,9 @@
             style="@style/Text.Secondary"
             tools:listitem="@android:layout/simple_list_item_1"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
     </LinearLayout>
 
 </LinearLayout>
