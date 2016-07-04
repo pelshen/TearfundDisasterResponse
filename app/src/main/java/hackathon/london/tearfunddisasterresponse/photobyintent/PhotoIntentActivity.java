@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import hackathon.london.tearfunddisasterresponse.amazons3.AmazonUploader;
 
 public class PhotoIntentActivity extends Activity {
 
+    private static final String LOGTAG = "PhotoIntentActivity";
+
 	private static final int ACTION_TAKE_PHOTO_S = 2;
 
 	private static final String BITMAP_STORAGE_KEY = "viewbitmap";
@@ -45,6 +48,12 @@ public class PhotoIntentActivity extends Activity {
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
 	private String category;
+
+	private boolean storageReadAccepted = false;
+	private boolean storageWriteAccepted = false;
+    private boolean requestingPermissons = false;
+
+	private static final int REQUESTING_STORAGE_ACCESS_CODE = 200;
 
 
 	/* Photo album for this application */
@@ -66,7 +75,7 @@ public class PhotoIntentActivity extends Activity {
 			if (storageDir != null) {
 				if (! storageDir.mkdirs()) {
 					if (! storageDir.exists()){
-						Log.d("CameraSample", "failed to create directory");
+						Log.d(LOGTAG, "getAlbumDir: failed to create directory");
 						return null;
 					}
 				}
@@ -88,9 +97,17 @@ public class PhotoIntentActivity extends Activity {
 	}
 
 	private File setUpPhotoFile() throws IOException {
-		
+        // Addition to make it run on lollypop (runtime permissions are needed.
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1 && !requestingPermissons)
+		{
+			String[] perms = {"android.permission.READ_EXTERNAL_STORAGE",
+							  "android.permission.WRITE_EXTERNAL_STORAGE"};
+			requestPermissions(perms, REQUESTING_STORAGE_ACCESS_CODE);
+            requestingPermissons = true;
+		}
 		File f = createImageFile();
 		mCurrentPhotoPath = f.getAbsolutePath();
+        Log.i(LOGTAG, "mCurrentPhotoPath = " + mCurrentPhotoPath);
 		
 		return f;
 	}
@@ -117,7 +134,7 @@ public class PhotoIntentActivity extends Activity {
 			break;			
 		} // switch
 
-        Log.d("mydebugmsg", "startActivityForResult");
+        Log.d(LOGTAG, "startActivityForResult");
 		startActivityForResult(takePictureIntent, actionCode);
 	}
 
@@ -206,22 +223,29 @@ public class PhotoIntentActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("mydebugmsg", "onActivityResult");
+        Log.d(LOGTAG, "onActivityResult");
 
         if (requestCode != ACTION_TAKE_PHOTO_S || resultCode != RESULT_OK) {
-			Log.d("mydebugmsg", "Activity wasn't an image or wasn't okay.");
+			Log.d(LOGTAG, "Activity wasn't an image or wasn't okay.");
 			return;
 		}
-
+        Log.d(LOGTAG, "onActivityResult 2");
 		AmazonUploader uploader = new AmazonUploader(getApplicationContext());
+		try {
+			setUpPhotoFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        Log.d(LOGTAG, "onActivityResult 4");
 		File file = new File(mCurrentPhotoPath);
 		String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
 		uploader.uploadPhoto(time, file);
-
+        Log.d(LOGTAG, "onActivityResult 5");
 		Intent nextScreen = new Intent(getApplicationContext(), LocationActivity.class);
 		ItemReport itemReport = new ItemReport();
 		itemReport.setCategory(category);
 		itemReport.addPicture(time);
+        Log.d(LOGTAG, "onActivityResult 6");
 		if(category.equalsIgnoreCase("health")) {
 			nextScreen.putExtra("Category", "Sample Health Question");
 		} else if(category.equalsIgnoreCase("building")) {
@@ -229,7 +253,9 @@ public class PhotoIntentActivity extends Activity {
 		} else if(category.equalsIgnoreCase("water")) {
 			nextScreen.putExtra("Category", "Sample Water Question");
 		}
+        Log.d(LOGTAG, "onActivityResult 7");
 		nextScreen.putExtra("Report", itemReport);
+        Log.d(LOGTAG, "start next screen.");
 		startActivity(nextScreen);
 	}
 
@@ -281,4 +307,16 @@ public class PhotoIntentActivity extends Activity {
 		}
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+
+		switch(permsRequestCode)
+		{
+			case REQUESTING_STORAGE_ACCESS_CODE:
+				storageReadAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
+				storageWriteAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
+                break;
+		}
+        requestingPermissons = false;
+	}
 }

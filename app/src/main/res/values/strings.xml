@@ -13,7 +13,7 @@
     <string name="album_name">CameraSample</string>
     <string name="title_activity_location">Getting Your Location</string>
     <string name="title_activity_final_page">FinalPageActivity</string>
-    <string name="notes_title">Any Additional Information?</string>
+    <string name="notes_title">Addition Info</string>
     <string name="notes_done">Done</string>
     <string name="final_page_title">Questions Complete!</string>
     <string name="sending_data">Sending data...</string>

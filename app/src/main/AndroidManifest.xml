@@ -14,6 +14,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- for photo -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <!-- for phone number/device ID -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 

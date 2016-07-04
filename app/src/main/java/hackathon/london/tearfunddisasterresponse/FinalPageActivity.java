@@ -91,7 +91,7 @@ public class FinalPageActivity extends Activity {
             returnString = telephonyManager.getLine1Number();
 
             // if the device has no phone number, return device Id instead
-            if (returnString == null) {
+            if (TextUtils.isEmpty(returnString) || returnString.matches("\\s")) {
                 Log.d(LOGTAG, "phone number not found, returning device Id instead");
                 returnString = "DeviceId " + telephonyManager.getDeviceId();
             }
